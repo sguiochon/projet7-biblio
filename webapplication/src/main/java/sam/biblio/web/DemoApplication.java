@@ -1,25 +1,13 @@
 package sam.biblio.web;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.hal.Jackson2HalModule;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
 import sam.biblio.dto.security.User;
 import sam.biblio.web.webclient.UserWebClient;
-
-import java.util.Arrays;
 
 @SpringBootApplication
 @PropertySource("classpath:application.properties")
@@ -50,7 +38,7 @@ public class DemoApplication implements CommandLineRunner {
 
         //System.out.println("Resultat: " + users);
 
-        PagedResources<User> users = userWebClient.getEntities(null);
+        PagedResources<User> users = userWebClient.findAll(null);
 
         System.out.println("Number: " + users.getMetadata().getNumber() );
         System.out.println("Total pages: " + users.getMetadata().getTotalPages());

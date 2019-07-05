@@ -18,7 +18,7 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 
 
-public class CommonWebClient<T> {
+public class CommonWebClient {
 
     protected String API_URL;
     protected String username;
@@ -69,14 +69,15 @@ public class CommonWebClient<T> {
         return str.toString();
     }
 
-    public PagedResources<T> getEntities(PageInfo page){
+    /*
+    public PagedResources<T> findAll(PageInfo page){
         ResponseEntity<PagedResources<T>> response = buildRestTemplate().exchange( buildParams(API_URL, page),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
                 new ParameterizedTypeReference<PagedResources<T>>() {
                 });
         return response.getBody();
-    }
+    }*/
 
 
 }

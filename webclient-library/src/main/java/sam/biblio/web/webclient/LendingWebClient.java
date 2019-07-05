@@ -12,7 +12,7 @@ import sam.biblio.dto.library.Lending;
 import sam.biblio.dto.security.User;
 
 @Component
-public class LendingWebClient extends CommonWebClient<Lending> {
+public class LendingWebClient extends CommonWebClient {
     protected LendingWebClient(@Value("${api.biblio.endpoint}") String endpoint,
                                @Value("${api.biblio.resource.path.lendings}") String resourcePath,
                                @Value("${api.biblio.basic-authentication.id}") String username,

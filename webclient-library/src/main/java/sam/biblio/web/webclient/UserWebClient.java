@@ -12,7 +12,7 @@ import sam.biblio.dto.PageInfo;
 import sam.biblio.dto.security.User;
 
 @Component
-public class UserWebClient extends CommonWebClient<User>{
+public class UserWebClient extends CommonWebClient{
 
     public UserWebClient(@Value("${api.biblio.endpoint}") String api_biblio_endpoint,
                          @Value("${api.biblio.resource.path.users}") String api_biblio_resource_path,
@@ -21,7 +21,7 @@ public class UserWebClient extends CommonWebClient<User>{
         super(api_biblio_endpoint, api_biblio_resource_path, username, password);
     }
 
-    public PagedResources<User> getEntities(PageInfo page){
+    public PagedResources<User> findAll(PageInfo page){
         ResponseEntity<PagedResources<User>> response = buildRestTemplate().exchange( buildParams(API_URL, page),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
