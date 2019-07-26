@@ -12,6 +12,7 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.hateoas.Resource;
 import sam.biblio.batch.listener.JobCompletionNotificationListener;
 import sam.biblio.batch.processor.LendingItemProcessor;
 import sam.biblio.batch.reader.LendingWebClientItemReader;
@@ -29,12 +30,11 @@ public class BatchConfig {
     @Autowired
     public StepBuilderFactory stepBuilderFactory;
 
-
     @Autowired
     LendingWebClientItemReader reader;
 
     @Bean
-    public ItemReader<Lending> reader() {
+    public ItemReader<Resource<Lending>> reader() {
         return reader;
     }
 
@@ -61,7 +61,7 @@ public class BatchConfig {
     @Bean
     public Step step1() {
         return stepBuilderFactory.get("step1")
-                .<Lending, Member>chunk(10)
+                .<Resource<Lending>, Member>chunk(10)
                 .reader(reader())
                 .processor(processor())
                 .writer(writer())

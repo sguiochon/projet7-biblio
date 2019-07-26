@@ -1,31 +1,41 @@
 package sam.biblio.batch.reader;
 
 import org.springframework.batch.item.ItemReader;
-import org.springframework.batch.item.NonTransientResourceException;
-import org.springframework.batch.item.ParseException;
-import org.springframework.batch.item.UnexpectedInputException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Component;
 import sam.biblio.dto.PageInfo;
 import sam.biblio.dto.library.Lending;
 import sam.biblio.web.webclient.LendingWebClient;
 
+import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class LendingWebClientItemReader implements ItemReader<Lending> {
+public class LendingWebClientItemReader implements ItemReader<Resource<Lending>> {
+
+
+    private LendingWebClient lendingWebClient;
+    private PageInfo pageInfo;
+    private List<Resource<Lending>> internalList;
+    private LocalDate limitDate;
 
     @Autowired
-    LendingWebClient lendingWebClient;
-
-    private PageInfo pageInfo = new PageInfo(4);
-    private List<Lending> internalList = new ArrayList();
+    public LendingWebClientItemReader(LendingWebClient lendingWebClient,
+                                      @Value("${batch.findByEndDateBefore.forcedValue}") String forcedLimitDate,
+                                      @Value("${api.biblio.page.size}") Integer pageSize) {
+        this.lendingWebClient = lendingWebClient;
+        this.limitDate = forcedLimitDate == null? LocalDate.now() : LocalDate.parse(forcedLimitDate);
+        this.internalList = new ArrayList();
+        this.pageInfo = new PageInfo(pageSize);
+    }
 
     @Override
-    public Lending read() throws Exception {
-        System.out.println("appel read()");
+    public Resource<Lending> read() throws Exception {
         if (internalList.isEmpty())
             loadPagedResources();
 
@@ -36,11 +46,14 @@ public class LendingWebClientItemReader implements ItemReader<Lending> {
     }
 
 
-    private void loadPagedResources() {
-        PagedResources<Lending> resources = null;
+    private void loadPagedResources() throws URISyntaxException {
+
+        System.out.println("##### >>>>> Forced limit date: " + limitDate);
+
+        PagedResources<Resource<Lending>> resources = null;
         if (pageInfo.hasNextPage()) {
             pageInfo = pageInfo.nextPage();
-            resources = lendingWebClient.getEntities(pageInfo);
+            resources = lendingWebClient.findByEndDateBefore(pageInfo, limitDate);
             pageInfo = PageInfo.fromPagedResourceMetadata(resources.getMetadata());
         }
 
@@ -49,7 +62,7 @@ public class LendingWebClientItemReader implements ItemReader<Lending> {
         System.out.println("has next page?: " + pageInfo.hasNextPage());
 
         if (resources != null) {
-            internalList = new ArrayList<Lending>(resources.getContent());
+            internalList = new ArrayList<Resource<Lending>>(resources.getContent());
         } else {
             internalList = null; // Means there is no more data to retrieve
         }

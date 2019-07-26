@@ -3,29 +3,29 @@ package sam.biblio.web.webclient;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.hal.Jackson2HalModule;
 import org.springframework.http.*;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import sam.biblio.dto.PageInfo;
-import sam.biblio.dto.security.User;
+import org.apache.http.client.utils.URIBuilder;
 
+import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
 
 public class CommonWebClient {
 
-    protected String API_URL;
-    protected String username;
-    protected String password;
+    String apiEndPoint;
+    String resourcePath;
+    String username;
+    String password;
+    URIBuilder uriBuilder;
 
-    protected CommonWebClient(String api_endpoint, String resource_path, String username, String password) {
-        this.API_URL = api_endpoint + resource_path;
+    protected CommonWebClient(String apiEndpoint, String resourcePath, String username, String password) throws URISyntaxException {
+        this.apiEndPoint = apiEndpoint;
+        this.resourcePath = resourcePath;
         this.username = username;
         this.password = password;
     }
@@ -35,7 +35,7 @@ public class CommonWebClient {
      * valid for Spring Data REST API and must be forced to 'application/hal+json'.
      * @return
      */
-    protected RestTemplate buildRestTemplate(){
+    RestTemplate buildRestTemplate(){
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.registerModule(new Jackson2HalModule());
@@ -48,7 +48,7 @@ public class CommonWebClient {
         return new RestTemplate(Arrays.asList(messageConverter));
     }
 
-    protected HttpHeaders createHeaders(String username, String password){
+    HttpHeaders createHeaders(String username, String password){
         return new HttpHeaders() {{
             String auth = username + ":" + password;
             byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")) );
@@ -57,7 +57,33 @@ public class CommonWebClient {
         }};
     }
 
-    protected String buildParams(String url, PageInfo pageInfo){
+    CommonWebClient addParam(PageInfo pageInfo){
+        if (pageInfo!=null){
+            uriBuilder.addParameter("page", String.valueOf(pageInfo.getNumber()));
+            uriBuilder.addParameter("size", String.valueOf(pageInfo.getSize()));
+        }
+        return this;
+    }
+
+    CommonWebClient addParam(String name, String value){
+        uriBuilder.addParameter(name, value);
+        return this;
+    }
+
+    CommonWebClient setUrl(String url) throws URISyntaxException {
+        uriBuilder = new URIBuilder(url);
+        return this;
+    }
+
+    String buildURL() throws URISyntaxException {
+        String urlString = uriBuilder.build().toString();
+        uriBuilder.clearParameters();
+        return urlString;
+    }
+
+
+/*
+    String buildParams(String url, PageInfo pageInfo){
         StringBuilder str = new StringBuilder(url);
         if (pageInfo==null){
             str.append("?page=0");
@@ -68,16 +94,7 @@ public class CommonWebClient {
         }
         return str.toString();
     }
-
-    /*
-    public PagedResources<T> findAll(PageInfo page){
-        ResponseEntity<PagedResources<T>> response = buildRestTemplate().exchange( buildParams(API_URL, page),
-                HttpMethod.GET,
-                new HttpEntity(createHeaders(username, password)),
-                new ParameterizedTypeReference<PagedResources<T>>() {
-                });
-        return response.getBody();
-    }*/
+*/
 
 
 }

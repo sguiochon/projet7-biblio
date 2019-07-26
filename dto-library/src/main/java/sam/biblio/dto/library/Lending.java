@@ -1,6 +1,5 @@
 package sam.biblio.dto.library;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
@@ -9,9 +8,9 @@ import java.time.format.DateTimeFormatter;
 public class Lending {
 
     private Long id;
-    @JsonFormat(pattern="yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     private LocalDate start;
-    @JsonFormat(pattern="yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     private LocalDate end;
     private Integer nbPostponement;
     private Member member;

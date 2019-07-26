@@ -1,11 +1,11 @@
 package sam.biblio.dto.security;
 
+import org.springframework.hateoas.ResourceSupport;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class User {
-
-    private Long id;
+public class User extends ResourceSupport {
 
     private String firstName;
 
@@ -31,14 +31,6 @@ public class User {
         this.password = password;
         this.enabled = false;
         roles = new ArrayList<Role>();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(final Long id) {
-        this.id = id;
     }
 
     public String getFirstName() {
@@ -123,8 +115,7 @@ public class User {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("User [id=").append(id)
-                .append(", firstName=").append(firstName)
+        builder.append("User [firstName=").append(firstName)
                 .append(", lastName=").append(lastName)
                 .append(", email=").append(email)
                 .append(", password=").append(password)

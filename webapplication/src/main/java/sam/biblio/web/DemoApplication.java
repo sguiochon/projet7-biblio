@@ -5,9 +5,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.Resource;
+import sam.biblio.dto.library.Lending;
+import sam.biblio.dto.library.Member;
 import sam.biblio.dto.security.User;
+import sam.biblio.web.webclient.LendingWebClient;
+import sam.biblio.web.webclient.MemberWebClient;
 import sam.biblio.web.webclient.UserWebClient;
+
+import java.util.stream.Collectors;
 
 @SpringBootApplication
 @PropertySource("classpath:application.properties")
@@ -15,6 +23,12 @@ public class DemoApplication implements CommandLineRunner {
 
     @Autowired
     UserWebClient userWebClient;
+
+    @Autowired
+    LendingWebClient lendingWebClient;
+
+    @Autowired
+    MemberWebClient memberWebClient;
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
@@ -25,58 +39,56 @@ public class DemoApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println("Bon, je me lance...");
 
-
-        //WebClient.UriSpec<WebClient.RequestBodySpec> request1 = webClient.method(HttpMethod.POST);
-
-        //WebClient.RequestBodySpec uri1 = webClient.method(HttpMethod.GET).uri("/users");
-
-        //Users users = uri1.exchange().block().bodyToMono(Users.class).block();
-
-//        String output = uri1.body(BodyInserters.fromObject(new String())).exchange().block().bodyToMono(String.class).block();
-//        System.out.println("Resultat: " + output);
-
-
-        //System.out.println("Resultat: " + users);
-
-        PagedResources<User> users = userWebClient.findAll(null);
+        PagedResources<Resource<User>> users = userWebClient.findAll(null);
 
         System.out.println("Number: " + users.getMetadata().getNumber() );
         System.out.println("Total pages: " + users.getMetadata().getTotalPages());
         System.out.println("Total elements: " + users.getMetadata().getTotalElements());
         System.out.println("Size: " + users.getMetadata().getSize());
 
-        for (User r : users.getContent()) {
-            System.out.println("Id: " + r.getId() + ", Prenom: " + r.getFirstName() + ", Nom: " + r.getLastName());
+        for (Resource<User> r : users.getContent()) {
+            System.out.println(r.toString());
+            System.out.println("Id: " + r.getId() + ", Prenom: " + r.getContent().getFirstName() + ", Nom: " + r.getContent().getLastName());
+        }
+        System.out.println("**********************************");
+
+
+
+/*
+        PagedResources<Lending> lendings = lendingWebClient.findAll(null);
+        for (Lending lending : lendings.getContent()){
+
+            System.out.println("Id: " + lending.getId() + ", start: " + lending.getStart() + ", links: " + lending.getLinks().stream().map(Link::toString).collect(Collectors.joining(",")));
+
+            Link memberLink = lending.getLink("member");
+            System.out.println("Member link: " + memberLink.getHref());
+
+            Resource<Member> member = memberWebClient.findByResourceUrl(memberLink.getHref());
+
+            Link userLink = member.getLink("user");
+            System.out.println("User link: " + userLink.getHref());
+
+            Resource<User> user = userWebClient.findByResourceUrl(userLink.getHref());
+            System.out.println("User: " + user.getContent().getFirstName() + " " + user.getContent().getLastName());
+        }*/
+
+        PagedResources<Resource<Lending>> lendings = lendingWebClient.findAll(null);
+        for (Resource<Lending> lending : lendings.getContent()){
+
+            System.out.println("PRET -- Id: " + lending.getId() + ", start: " + lending.getContent().getStart() + ", links: " + lending.getLinks().stream().map(Link::toString).collect(Collectors.joining(",")));
+
+            Link memberLink = lending.getLink("member");
+            System.out.println("Member link: " + memberLink.getHref());
+
+            Resource<Member> member = memberWebClient.findByResourceUrl(memberLink.getHref());
+
+            Link userLink = member.getLink("user");
+            System.out.println("User link: " + userLink.getHref());
+
+            Resource<User> user = userWebClient.findByResourceUrl(userLink.getHref());
+            System.out.println("User: " + user.getContent().getFirstName() + " " + user.getContent().getLastName());
         }
 
-
-        /*
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        objectMapper.registerModule(new Jackson2HalModule());
-
-        MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
-
-        messageConverter.setSupportedMediaTypes(MediaType.parseMediaTypes("application/hal+json"));
-        messageConverter.setObjectMapper(objectMapper);
-
-        RestTemplate restTemplate = new RestTemplate(Arrays.asList(messageConverter));
-        String apiResourceUrl = "http://localhost:9990/users";
-
-        ResponseEntity<PagedResources<User>> response2 = restTemplate.exchange(apiResourceUrl,
-                HttpMethod.GET,
-                HttpEntity.EMPTY,
-                new ParameterizedTypeReference<PagedResources<User>>() {
-                });
-
-
-        for (User r : response2.getBody().getContent()) {
-            System.out.println("Prenom : " + r.getFirstName());
-            System.out.println("Id: " + r.getId());
-        }
-
-        System.out.println("(((((((((((( " + response2.getBody().toString());
-*/
     }
 
 }
