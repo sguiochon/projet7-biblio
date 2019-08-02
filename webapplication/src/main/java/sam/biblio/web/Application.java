@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @SpringBootApplication
 @PropertySource("classpath:application.properties")
-public class DemoApplication implements CommandLineRunner {
+public class Application implements CommandLineRunner {
 
     @Autowired
     UserWebClient userWebClient;
@@ -31,7 +31,7 @@ public class DemoApplication implements CommandLineRunner {
     MemberWebClient memberWebClient;
 
     public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
 

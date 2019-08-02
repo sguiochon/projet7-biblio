@@ -16,11 +16,18 @@ import java.net.URISyntaxException;
 @Component
 public class UserWebClient extends CommonWebClient{
 
+    private String findByEmailURLFragment;
+    private String findByEmailParamEmail;
+
     public UserWebClient(@Value("${api.biblio.endpoint}") String api_biblio_endpoint,
                          @Value("${api.biblio.resource.path.users}") String api_biblio_resource_path,
                          @Value("${api.biblio.basic-authentication.id}") String username,
-                         @Value("${api.biblio.basic-authentication.password}") String password) throws URISyntaxException {
+                         @Value("${api.biblio.basic-authentication.password}") String password,
+                         @Value ("${api.biblio.resource.path.users.searchByEmail}") String findByEmailURLFragment,
+                         @Value ("${api.biblio.resource.path.users.searchByEmail.emailParam}") String findByEmailParamEmail) throws URISyntaxException {
         super(api_biblio_endpoint, api_biblio_resource_path, username, password);
+        this.findByEmailURLFragment = findByEmailURLFragment;
+        this.findByEmailParamEmail = findByEmailParamEmail;
     }
 
     public PagedResources<Resource<User>> findAll(PageInfo page) throws URISyntaxException {
@@ -34,6 +41,15 @@ public class UserWebClient extends CommonWebClient{
 
     public Resource<User> findByResourceUrl(String resourceUrl) throws URISyntaxException {
         ResponseEntity<Resource<User>> response = buildRestTemplate().exchange(setUrl(resourceUrl).buildURL(),
+                HttpMethod.GET,
+                new HttpEntity(createHeaders(username, password)),
+                new ParameterizedTypeReference<Resource<User>>() {
+                });
+        return response.getBody();
+    }
+
+    public Resource<User> findByEmail(String email) throws URISyntaxException {
+        ResponseEntity<Resource<User>> response = buildRestTemplate().exchange( setUrl(apiEndPoint + findByEmailURLFragment).addParam(findByEmailParamEmail, email).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
                 new ParameterizedTypeReference<Resource<User>>() {

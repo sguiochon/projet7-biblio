@@ -56,8 +56,8 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <layout>NONE</layout>
                     <skip>false</skip>
+                    <classifier>exec</classifier>
                 </configuration>
             </plugin>
 
@@ -67,6 +67,7 @@
                 <version>3.0.1</version>
             </plugin>
 
+            <!--
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -83,16 +84,9 @@
                     <arguments>
                         <argument>argument1</argument>
                     </arguments>
-                    <!--<systemProperties>
-                        <systemProperty>
-                            <key>myproperty</key>
-                            <value>myvalue</value>
-                        </systemProperty>
-                        ...
-                    </systemProperties>-->
                 </configuration>
             </plugin>
-
+-->
         </plugins>
     </build>
 

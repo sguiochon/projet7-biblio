@@ -9,7 +9,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"sam.biblio"})
+@ComponentScan(basePackages = {"sam.biblio"}) // Requis pour permettre la prise en compte des WebClient
 public class Application {
 
     public static void main(String[] args) throws Exception {

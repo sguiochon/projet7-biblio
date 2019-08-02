@@ -1,0 +1,53 @@
+<configuration>
+
+	<property name="LOG_HOME" value="logs" />
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			 <pattern>
+			     [%-5level] %logger{5} : %message%n
+			</pattern>
+		</encoder>
+	</appender>
+
+
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/logFile.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+
+			<!-- keep 2 days' worth of history capped at 100MB total size -->
+			<maxHistory>2</maxHistory>
+			<totalSizeCap>100MB</totalSizeCap>
+
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+
+	<logger name="sam.biblio.batch" level="DEBUG" />
+
+	<!-- to view SQL statements, set to DEBUG -->
+	<logger name="org.hibernate.SQL" level="INFO" />
+
+	<logger name="org.springframework" level="INFO"/>
+	<logger name="com.zaxxer.hikari" level="INFO" additivity="false"/>
+	<logger name="org.springframework.jpa" level="DEBUG" additivity="false"/>
+	<logger name="org.springframework.jdbc" level="DEBUG" additivity="false"/>
+	<logger name="org.springframework.transaction" level="WARN" />
+	<logger name="org.springframework.security" level="TRACE" additivity="false"/>
+	<logger name="org.apache.tomcat" level="WARN" additivity="false"/>
+
+	<!-- in order to debug some marshalling issues, this needs to be TRACE -->
+	<logger name="org.springframework.web.servlet.mvc" level="DEBUG" />
+
+	<root level="DEBUG">
+		<!--<appender-ref ref="FILE" />-->
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</configuration>
