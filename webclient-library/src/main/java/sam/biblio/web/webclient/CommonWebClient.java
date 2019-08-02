@@ -6,6 +6,7 @@ import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.hateoas.hal.Jackson2HalModule;
 import org.springframework.http.*;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import sam.biblio.dto.PageInfo;
 import org.apache.http.client.utils.URIBuilder;
@@ -21,7 +22,8 @@ public class CommonWebClient {
     String resourcePath;
     String username;
     String password;
-    URIBuilder uriBuilder;
+    //URIBuilder uriBuilder;
+    StringBuilder stringBuilder;
 
     protected CommonWebClient(String apiEndpoint, String resourcePath, String username, String password) throws URISyntaxException {
         this.apiEndPoint = apiEndpoint;
@@ -42,7 +44,7 @@ public class CommonWebClient {
 
         MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
 
-        messageConverter.setSupportedMediaTypes(MediaType.parseMediaTypes("application/hal+json"));
+        messageConverter.setSupportedMediaTypes(MediaType.parseMediaTypes(Arrays.asList("*/*","application/hal+json;charset=utf-8","application/json;charset=utf-8")));
         messageConverter.setObjectMapper(objectMapper);
 
         return new RestTemplate(Arrays.asList(messageConverter));
@@ -59,25 +61,33 @@ public class CommonWebClient {
 
     CommonWebClient addParam(PageInfo pageInfo){
         if (pageInfo!=null){
-            uriBuilder.addParameter("page", String.valueOf(pageInfo.getNumber()));
-            uriBuilder.addParameter("size", String.valueOf(pageInfo.getSize()));
+            //uriBuilder.addParameter("page", String.valueOf(pageInfo.getNumber()));
+            this.addParam("page", String.valueOf(pageInfo.getNumber()));
+            //uriBuilder.addParameter("size", String.valueOf(pageInfo.getSize()));
+            this.addParam("size", String.valueOf(pageInfo.getSize()));
         }
         return this;
     }
 
     CommonWebClient addParam(String name, String value){
-        uriBuilder.addParameter(name, value);
+        //uriBuilder.addParameter(name, value);
+        if (!stringBuilder.toString().contains("?"))
+            stringBuilder.append("?");
+        stringBuilder.append(name).append("=").append(value);
         return this;
     }
 
     CommonWebClient setUrl(String url) throws URISyntaxException {
-        uriBuilder = new URIBuilder(url);
+        //uriBuilder = new URIBuilder(url);
+        stringBuilder = new StringBuilder(url);
         return this;
     }
 
     String buildURL() throws URISyntaxException {
-        String urlString = uriBuilder.build().toString();
-        uriBuilder.clearParameters();
+        String urlString = stringBuilder.toString();//uriBuilder.build().toString();
+        //uriBuilder.clearParameters();
+        stringBuilder=null;
+        System.out.println(">>>>>>>>>>>>>>>>>> " + urlString);
         return urlString;
     }
 

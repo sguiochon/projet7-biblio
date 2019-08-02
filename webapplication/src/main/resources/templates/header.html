@@ -23,12 +23,22 @@
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
           crossorigin=""/>
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/imgas/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
-    <link rel="manifest" href="/webmanifest.json">
-    <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
     <script th:src="@{/js/p7.js}" crossorigin="anonymous"></script>
@@ -62,9 +72,9 @@
 <body>
 
 <div th:fragment="copy" class="container" style="display:inline">
-    <nav class="navbar navbar-expand-md navbar-dark bg-white fixed-top">
-        <a class="navbar-brand" href="#"></a>
-        <img th:src="@{/images/p7-logo.png}" src="/images/p7-logo.png"/>
+    <nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
+        <a class="navbar-brand" href="#">Bibliothèque<br>de Toulon</a>
+        <img th:src="@{/images/p7-logo_86x83.png}" src="/images/p7-logo_86x83.png"/>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
                 aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -75,15 +85,12 @@
                 <li class="nav-item active" th:class="${#httpServletRequest.getServletPath()}=='/'? 'nav-item active' : 'nav-item'">
                     <a class="nav-link" th:href="@{/}" href="#">Accueil<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item active" th:class="${#httpServletRequest.getServletPath()}=='/sites'? 'nav-item active' : 'nav-item'">
-                    <a class="nav-link" th:href="@{/sites}" href="#">Les sites</a>
-                </li>
-                <li class="nav-item active" th:class="${#httpServletRequest.getServletPath()}=='/topos'? 'nav-item active' : 'nav-item'">
-                    <a class="nav-link" th:href="@{/topos}" href="#">Les Topos</a>
+                <li class="nav-item active" th:class="${#httpServletRequest.getServletPath()}=='/documents'? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" th:href="@{/documents}" href="#">Recherche</a>
                 </li>
 
-                <li sec:authorize="isAuthenticated()" class="nav-item active" th:class="${#httpServletRequest.getServletPath()}=='/pret'? 'nav-item active' : 'nav-item'">
-                    <a class="nav-link" th:href="@{/pret}" href="#">Partage de topo</a>
+                <li sec:authorize="isAuthenticated()" class="nav-item active" th:class="${#httpServletRequest.getServletPath()}=='/lendings'? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" th:href="@{/lendings}" href="#">Mes prêts</a>
                 </li>
 
                 <li class="nav-item" th:class="${#httpServletRequest.getServletPath()}=='/login'? 'nav-item active' : 'nav-item'" sec:authorize="!isAuthenticated()">

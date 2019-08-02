@@ -43,10 +43,14 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
         final Resource<User> user;
         try {
+            System.out.println(">>>>> tentative de connexion au site");
             user = userWebClient.findByEmail(email);
+            System.out.println(">>>>> email: " + user.getContent().getEmail() + ", password: " + user.getContent().getPassword() + " ,isEnabled: " + user.getContent().isEnabled() + ", roles: " + user.getContent().getRoles());
         } catch (URISyntaxException e) {
+            System.out.println(e.toString());
             throw new RuntimeException(e);
         } catch (HttpClientErrorException.NotFound e) {
+            System.out.println(e.toString());
             throw new UsernameNotFoundException("No user found with username: " + email);
         }
         return new org.springframework.security.core.userdetails.User(user.getContent().getEmail(), user.getContent().getPassword(), user.getContent().isEnabled(), true, true, true, getAuthorities(user.getContent().getRoles()));
@@ -60,6 +64,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         final List<String> privileges = new ArrayList<String>();
         final List<Privilege> collection = new ArrayList<Privilege>();
         for (final Role role : roles) {
+            System.out.println(">>>>> Authorities: " + role.getPrivileges());
             collection.addAll(role.getPrivileges());
         }
         for (final Privilege item : collection) {

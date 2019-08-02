@@ -1,0 +1,46 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="header :: copy"></head>
+
+<body>
+
+<p style="display:block"></p>
+<div class="container">
+    <p>&nbsp;</p>
+    <h1>Bienvenue!</h1>
+    <p>&nbsp;</p>
+
+    <div class="card mb-3" style="max-width: 550px">
+        <img class="card-img-top" src="depositphotos_login.jpg" alt="Card image cap">
+        <div class="card-body">
+            <div th:if="${loginError}" class="alert alert-warning" role="alert">
+            Email ou mot de passe incorrect
+            </div>
+            <form th:action="@{/login}" method="post">
+                <div class="form-group">
+                    <label for="username">Identifiant</label>
+                    <input type="email" class="form-control" name="username" id="username" aria-describedby="emailHelp"
+                           placeholder="Votre adresse email">
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                </div>
+                <div class="d-flex justify-content-between flex-wrap">
+                <div><button type="submit" class="btn btn-primary">Se connecter</button></div>
+                <div>Pas encore membre? <a th:href="@{/register}" href="#" class="btn btn-primary">Créer un compte</a></div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <p>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>
