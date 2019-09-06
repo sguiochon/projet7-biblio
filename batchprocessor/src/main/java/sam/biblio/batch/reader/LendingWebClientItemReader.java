@@ -18,11 +18,11 @@ import java.util.List;
 @Component
 public class LendingWebClientItemReader implements ItemReader<Resource<Lending>> {
 
-
     private LendingWebClient lendingWebClient;
     private PageInfo pageInfo;
     private List<Resource<Lending>> internalList;
     private LocalDate limitDate;
+    private int pageSize;
 
     @Autowired
     public LendingWebClientItemReader(LendingWebClient lendingWebClient,
@@ -30,6 +30,10 @@ public class LendingWebClientItemReader implements ItemReader<Resource<Lending>>
                                       @Value("${api.biblio.page.size}") Integer pageSize) {
         this.lendingWebClient = lendingWebClient;
         this.limitDate = forcedLimitDate == null? LocalDate.now() : LocalDate.parse(forcedLimitDate);
+        this.pageSize = pageSize;
+    }
+
+    public void init(){
         this.internalList = new ArrayList();
         this.pageInfo = new PageInfo(pageSize);
     }

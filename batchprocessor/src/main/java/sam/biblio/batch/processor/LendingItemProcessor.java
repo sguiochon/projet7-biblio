@@ -4,6 +4,7 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
+import org.springframework.stereotype.Component;
 import sam.biblio.dto.library.Copy;
 import sam.biblio.dto.library.Document;
 import sam.biblio.dto.library.Lending;
@@ -14,6 +15,7 @@ import sam.biblio.web.webclient.*;
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class LendingItemProcessor implements ItemProcessor<Resource<Lending>, Member> {
 
     @Autowired
@@ -28,7 +30,11 @@ public class LendingItemProcessor implements ItemProcessor<Resource<Lending>, Me
     @Autowired
     DocumentWebClient documentWebClient;
 
-    private Map<String, Member> internalMap = new HashMap();
+    private Map<String, Member> internalMap;
+
+    public void init(){
+        internalMap = new HashMap();
+    }
 
     @Override
     public Member process(Resource<Lending> lendingResource) throws Exception {
