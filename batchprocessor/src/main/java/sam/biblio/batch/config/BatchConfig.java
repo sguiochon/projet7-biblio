@@ -46,7 +46,7 @@ public class BatchConfig {
         this.writer = writer;
     }
 
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(cron = "${application.cron.pattern}")
     public void run() throws Exception {
         reader.init();
         processor.init();

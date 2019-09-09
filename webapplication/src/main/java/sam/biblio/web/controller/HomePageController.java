@@ -17,15 +17,10 @@ import java.net.URISyntaxException;
 @Controller
 public class HomePageController {
 
-
-    @Autowired
-    UserWebClient userWebClient;
-
-
     @RequestMapping(value = "/", method={RequestMethod.GET, RequestMethod.POST})
     public String viewHomePage() throws URISyntaxException {
         System.out.println(">>>>>  GET /");
-        //Resource<User> user = userWebClient.findByEmail("coucou@hell.com");
+
 
         return "homepage";
     }

@@ -25,13 +25,13 @@ public class LendingWebClient extends CommonWebClient {
                                @Value("${api.biblio.basic-authentication.id}") String username,
                                @Value("${api.biblio.basic-authentication.password}") String password,
                                @Value ("${api.biblio.resource.path.lendings.searchByEndDateBefore}") String findByEndBeforeURLFragment,
-                               @Value ("${api.biblio.resource.path.lendings.searchByEndDateBefore.dateParam}") String findByEndBeforeParamDate) throws URISyntaxException {
+                               @Value ("${api.biblio.resource.path.lendings.searchByEndDateBefore.dateParam}") String findByEndBeforeParamDate) {
         super(endpoint, resourcePath, username, password);
         this.findByEndBeforeURLFragment = findByEndBeforeURLFragment;
         this.findByEndBeforeParamDate = findByEndBeforeParamDate;
     }
 
-    public PagedResources<Resource<Lending>> findByEndDateBefore(PageInfo page, LocalDate limitDate) throws URISyntaxException {
+    public PagedResources<Resource<Lending>> findByEndDateBefore(PageInfo page, LocalDate limitDate) {
         ResponseEntity<PagedResources<Resource<Lending>>> response = buildRestTemplate().exchange( setUrl(apiEndPoint + findByEndBeforeURLFragment).addParam(page).addParam(findByEndBeforeParamDate, limitDate.toString()).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
@@ -40,7 +40,7 @@ public class LendingWebClient extends CommonWebClient {
         return response.getBody();
     }
 
-    public PagedResources<Resource<Lending>> findAll(PageInfo page) throws URISyntaxException {
+    public PagedResources<Resource<Lending>> findAll(PageInfo page) {
         ResponseEntity<PagedResources<Resource<Lending>>> response = buildRestTemplate().exchange( setUrl(apiEndPoint + resourcePath).addParam(page).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
@@ -49,7 +49,7 @@ public class LendingWebClient extends CommonWebClient {
         return response.getBody();
     }
 
-    public Resource<Lending> findByResourceUrl(String resourceUrl) throws URISyntaxException {
+    public Resource<Lending> findByResourceUrl(String resourceUrl) {
         ResponseEntity<Resource<Lending>> response = buildRestTemplate().exchange(setUrl(resourceUrl).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),

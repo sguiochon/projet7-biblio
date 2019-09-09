@@ -1,54 +1,57 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head th:fragment="copy">
     <title>Bibliothèque de Toulon</title>
 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
     <meta
             content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no"
             id="Viewport" name="viewport"/>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
 
     <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
               integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
     <!-- VertiGo! -->
     <link rel="stylesheet" th:href="@{/css/p7-styles.css}"/>
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+    <link crossorigin="" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-          crossorigin=""/>
+          rel="stylesheet"/>
 
-    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
+    <link href="/apple-icon-57x57.png" rel="apple-touch-icon" sizes="57x57">
+    <link href="/apple-icon-60x60.png" rel="apple-touch-icon" sizes="60x60">
+    <link href="/apple-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
+    <link href="/apple-icon-76x76.png" rel="apple-touch-icon" sizes="76x76">
+    <link href="/apple-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
+    <link href="/apple-icon-120x120.png" rel="apple-touch-icon" sizes="120x120">
+    <link href="/apple-icon-144x144.png" rel="apple-touch-icon" sizes="144x144">
+    <link href="/apple-icon-152x152.png" rel="apple-touch-icon" sizes="152x152">
+    <link href="/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180">
+    <link href="/android-icon-192x192.png" rel="icon" sizes="192x192" type="image/png">
+    <link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
+    <link href="/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png">
+    <link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png">
+    <link href="/manifest.json" rel="manifest">
+    <meta content="#ffffff" name="msapplication-TileColor">
+    <meta content="/ms-icon-144x144.png" name="msapplication-TileImage">
+    <meta content="#ffffff" name="theme-color">
 
-    <script th:src="@{/js/p7.js}" crossorigin="anonymous"></script>
+    <script crossorigin="anonymous" th:src="@{/js/p7.js}"></script>
 
     <script
-            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            crossorigin="anonymous"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-            crossorigin="anonymous"></script>
+            src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o"
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <!--
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -57,9 +60,9 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
 -->
-    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+    <script crossorigin=""
             integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
-            crossorigin=""></script>
+            src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -71,44 +74,52 @@
 
 <body>
 
-<div th:fragment="copy" class="container" style="display:inline">
-    <nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
+<div class="container" style="display:inline" th:fragment="copy">
+    <nav class="navbar navbar-expand-md navbar-light bg-white sticky-top">
         <a class="navbar-brand" href="#">Bibliothèque<br>de Toulon</a>
-        <img th:src="@{/images/p7-logo_86x83.png}" src="/images/p7-logo_86x83.png"/>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <img src="/images/p7-logo_86x83.png" th:src="@{/images/p7-logo_86x83.png}"/>
+        <button aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler"
+                data-target="#navbarsExampleDefault" data-toggle="collapse" type="button">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active" th:class="${#httpServletRequest.getServletPath()}=='/'? 'nav-item active' : 'nav-item'">
-                    <a class="nav-link" th:href="@{/}" href="#">Accueil<span class="sr-only">(current)</span></a>
+                <li class="nav-item active"
+                    th:class="${#httpServletRequest.getServletPath()}=='/'? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" href="#" th:href="@{/}">Accueil<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item active" th:class="${#httpServletRequest.getServletPath()}=='/documents'? 'nav-item active' : 'nav-item'">
-                    <a class="nav-link" th:href="@{/documents}" href="#">Recherche</a>
-                </li>
-
-                <li sec:authorize="isAuthenticated()" class="nav-item active" th:class="${#httpServletRequest.getServletPath()}=='/lendings'? 'nav-item active' : 'nav-item'">
-                    <a class="nav-link" th:href="@{/lendings}" href="#">Mes prêts</a>
+                <li class="nav-item active"
+                    th:class="${#httpServletRequest.getServletPath()}=='/documents'? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" href="#" th:href="@{/documents}">Recherche</a>
                 </li>
 
-                <li class="nav-item" th:class="${#httpServletRequest.getServletPath()}=='/login'? 'nav-item active' : 'nav-item'" sec:authorize="!isAuthenticated()">
+                <li class="nav-item active" sec:authorize="isAuthenticated()"
+                    th:class="${#httpServletRequest.getServletPath()}=='/lendings'? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" href="#" th:href="@{/lendings}">Mes prêts</a>
+                </li>
+
+                <li class="nav-item"
+                    sec:authorize="!isAuthenticated()"
+                    th:class="${#httpServletRequest.getServletPath()}=='/login'? 'nav-item active' : 'nav-item'">
                     <a class="nav-link" th:href="@{/login}">Se connecter</a>
                 </li>
 
-                <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mon compte</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        <a class="dropdown-item" th:href="@{/logout}">Déconnexion</a>
-                        <a class="dropdown-item" href="#">Mon profil</a>
+                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                    <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle"
+                       data-toggle="dropdown"
+                       href="#" id="dropdown01">Mon compte</a>
+                    <div aria-labelledby="dropdown01" class="dropdown-menu">
+                        <a class="dropdown-item" href="#" th:href="@{/logout}">Déconnexion</a>
+                        <a class="dropdown-item" href="#" th:href="@{/profil}">Mon profil</a>
                     </div>
                 </li>
 
-                <li sec:authorize="hasRole('ADMIN')" class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
+                    <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle"
+                       data-toggle="dropdown" href="http://example.com" id="dropdown02">Administration</a>
+                    <div aria-labelledby="dropdown01" class="dropdown-menu">
                         <a class="dropdown-item" href="#">Action</a>
                         <a class="dropdown-item" href="#">Another action</a>
                         <a class="dropdown-item" href="#">Something else here</a>
@@ -117,7 +128,7 @@
 
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <input aria-label="Search" class="form-control mr-sm-2" placeholder="Search" type="text">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
