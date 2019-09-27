@@ -16,7 +16,7 @@ import java.net.URISyntaxException;
 import java.security.Principal;
 
 @Controller
-public class ProfilController {
+public class ProfileController {
 
     @Autowired
     UserWebClient userWebClient;
@@ -24,7 +24,7 @@ public class ProfilController {
     @Autowired
     MemberWebClient memberWebClient;
 
-    @RequestMapping(value = "/profil", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/profile", method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView viewProfil(Principal principal) throws URISyntaxException {
 
         Resource<User> user = userWebClient.findByEmail(principal.getName());
@@ -33,7 +33,7 @@ public class ProfilController {
 
         member.getContent().setUser(user.getContent());
 
-        ModelAndView modelAndView = new ModelAndView("profilPage");
+        ModelAndView modelAndView = new ModelAndView("profilePage");
         modelAndView.addObject("member", member.getContent());
         return modelAndView;
     }
