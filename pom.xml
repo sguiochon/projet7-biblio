@@ -16,7 +16,7 @@
     </parent>
 
     <modules>
-        <module>dto-library</module>
+        <module>model-library</module>
         <module>webclient-library</module>
         <module>webapplication</module>
         <module>batchprocessor</module>
@@ -35,6 +35,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

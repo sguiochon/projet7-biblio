@@ -1,7 +1,7 @@
-package sam.biblio.dto.library;
+package sam.biblio.model.library;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import sam.biblio.dto.security.User;
+import sam.biblio.model.security.User;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

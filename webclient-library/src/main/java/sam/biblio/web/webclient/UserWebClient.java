@@ -8,8 +8,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import sam.biblio.dto.PageInfo;
-import sam.biblio.dto.security.User;
+import sam.biblio.model.PageInfo;
+import sam.biblio.model.security.User;
 
 import java.net.URISyntaxException;
 
@@ -19,13 +19,15 @@ public class UserWebClient extends CommonWebClient{
     private String findByEmailURLFragment;
     private String findByEmailParamEmail;
 
-    public UserWebClient(@Value("${api.biblio.endpoint}") String api_biblio_endpoint,
-                         @Value("${api.biblio.resource.path.users}") String api_biblio_resource_path,
+    public UserWebClient(@Value("${api.biblio.endpoint}") String endpoint,
+                         @Value("${api.biblio.resource.path.users}") String path,
                          @Value("${api.biblio.basic-authentication.id}") String username,
                          @Value("${api.biblio.basic-authentication.password}") String password,
                          @Value ("${api.biblio.resource.path.users.searchByEmail}") String findByEmailURLFragment,
-                         @Value ("${api.biblio.resource.path.users.searchByEmail.emailParam}") String findByEmailParamEmail) throws URISyntaxException {
-        super(api_biblio_endpoint, api_biblio_resource_path, username, password);
+                         @Value ("${api.biblio.resource.path.users.searchByEmail.emailParam}") String findByEmailParamEmail,
+                         @Value("${httpclient.connectTimeout:10000}") int connectTimeout,
+                         @Value("${httpclient.readTimeout:10000}") int readTimeout) {
+        super(endpoint, path, username, password, connectTimeout, readTimeout);
         this.findByEmailURLFragment = findByEmailURLFragment;
         this.findByEmailParamEmail = findByEmailParamEmail;
     }

@@ -17,8 +17,8 @@ import sam.biblio.batch.listener.JobCompletionNotificationListener;
 import sam.biblio.batch.processor.LendingItemProcessor;
 import sam.biblio.batch.reader.LendingWebClientItemReader;
 import sam.biblio.batch.writer.MemberItemWriter;
-import sam.biblio.dto.library.Lending;
-import sam.biblio.dto.library.Member;
+import sam.biblio.model.library.Lending;
+import sam.biblio.model.library.Member;
 
 @Configuration
 @EnableScheduling

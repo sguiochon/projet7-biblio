@@ -1,14 +1,14 @@
 package sam.biblio.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import sam.biblio.dto.library.Member;
-import sam.biblio.dto.security.User;
+import sam.biblio.model.security.User;
+import sam.biblio.model.library.Member;
+import sam.biblio.model.security.User;
 import sam.biblio.web.webclient.MemberWebClient;
 import sam.biblio.web.webclient.UserWebClient;
 

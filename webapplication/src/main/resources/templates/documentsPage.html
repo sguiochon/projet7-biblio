@@ -45,11 +45,10 @@
                 </nav>
 
                 <th:block th:each="document : ${documents}">
-
                     <div class="card" style="width: 100%">
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${document.title} + ' - ' +  ${document.author}">Titre - Auteur</h5>
-                            <img alt="Card image cap" class="float-left" src="mont-blanc_160x160.jpg" style="padding-right:8px" ><!-- th:src="${document.image2}"> -->
+                            <h5 class="card-title" th:text="${document.titre} + ' - ' +  ${document.auteur}">Titre - Auteur</h5>
+                            <img alt="Card image cap" class="float-left" th:src="@{/images/chaperon_rouge.jpg}" style="height:100px;padding-right:8px" ><!-- th:src="${document.image2}"> -->
                             <p class="card-text" th:text="${document.description}">Description</p>
                             <div>
 <!--                                <button class="btn btn-secondary" style="margin:1px" type="button">
@@ -59,7 +58,6 @@
                         </div>
                     </div>
                     <p/>
-
                 </th:block>
 
             </form>

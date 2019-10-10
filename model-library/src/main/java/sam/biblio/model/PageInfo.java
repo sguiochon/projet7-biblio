@@ -1,4 +1,4 @@
-package sam.biblio.dto;
+package sam.biblio.model;
 
 import org.springframework.hateoas.PagedResources;
 

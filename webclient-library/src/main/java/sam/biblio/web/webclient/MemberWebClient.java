@@ -8,10 +8,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import sam.biblio.dto.PageInfo;
-import sam.biblio.dto.library.Member;
-
-import java.net.URISyntaxException;
+import sam.biblio.model.PageInfo;
+import sam.biblio.model.library.Member;
 
 @Component
 public class MemberWebClient extends CommonWebClient {
@@ -24,8 +22,10 @@ public class MemberWebClient extends CommonWebClient {
                               @Value("${api.biblio.basic-authentication.id}") String username,
                               @Value("${api.biblio.basic-authentication.password}") String password,
                               @Value("${api.biblio.resource.path.members.searchByUserEmail}") String findByUserEmailURLFragment,
-                              @Value("${api.biblio.resource.path.members.searchByUserEmail.param}") String findByUserEmailParam) {
-        super(endpoint, resourcePath, username, password);
+                              @Value("${api.biblio.resource.path.members.searchByUserEmail.param}") String findByUserEmailParam,
+                              @Value("${httpclient.connectTimeout:10000}") int connectTimeout,
+                              @Value("${httpclient.readTimeout:10000}") int readTimeout) {
+        super(endpoint, resourcePath, username, password, connectTimeout, readTimeout);
         this.findByUserEmailURLFragment = findByUserEmailURLFragment;
         this.findByUserEmailParam = findByUserEmailParam;
     }
@@ -48,7 +48,7 @@ public class MemberWebClient extends CommonWebClient {
         return response.getBody();
     }
 
-    public Resource<Member> findByUserEmail(String userEmail){
+    public Resource<Member> findByUserEmail(String userEmail) {
         ResponseEntity<Resource<Member>> response = buildRestTemplate().exchange(setUrl(apiEndPoint + findByUserEmailURLFragment).addParam(findByUserEmailParam, userEmail).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),

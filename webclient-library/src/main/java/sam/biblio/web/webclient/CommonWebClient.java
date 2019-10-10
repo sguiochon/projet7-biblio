@@ -6,9 +6,10 @@ import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.hateoas.hal.Jackson2HalModule;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
-import sam.biblio.dto.PageInfo;
+import sam.biblio.model.PageInfo;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
@@ -21,19 +22,22 @@ public class CommonWebClient {
     String resourcePath;
     String username;
     String password;
+    private int connectTimeout;
+    private int readTimeout;
     private StringBuilder stringBuilder;
 
-    protected CommonWebClient(String apiEndpoint, String resourcePath, String username, String password) {
+    protected CommonWebClient(String apiEndpoint, String resourcePath, String username, String password, int connectTimeout, int readTimeout) {
         this.apiEndPoint = apiEndpoint;
         this.resourcePath = resourcePath;
         this.username = username;
         this.password = password;
+        this.connectTimeout = connectTimeout;
+        this.readTimeout = readTimeout;
     }
 
     /**
      * Builds a RestTemplate instance that fixes a bug in SpringBoot Web Client: http header Accept is not
      * valid for Spring Data REST API and must be forced to 'application/hal+json'.
-     *
      */
     RestTemplate buildRestTemplate() {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -45,16 +49,24 @@ public class CommonWebClient {
         messageConverter.setSupportedMediaTypes(MediaType.parseMediaTypes(Arrays.asList("*/*", "application/hal+json;charset=utf-8", "application/json;charset=utf-8")));
         messageConverter.setObjectMapper(objectMapper);
 
-        return new RestTemplate(Collections.singletonList(messageConverter));
+        RestTemplate restTemplate = new RestTemplate(Collections.singletonList(messageConverter));
+
+        restTemplate.setRequestFactory(new SimpleClientHttpRequestFactory());
+        SimpleClientHttpRequestFactory rf = (SimpleClientHttpRequestFactory) restTemplate.getRequestFactory();
+        rf.setReadTimeout(readTimeout);
+        rf.setConnectTimeout(connectTimeout);
+
+        return restTemplate;
     }
 
     HttpHeaders createHeaders(String username, String password) {
-        return new HttpHeaders() {{
-            String auth = username + ":" + password;
-            byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));
-            String authHeader = "Basic " + new String(encodedAuth);
-            set("Authorization", authHeader);
-        }};
+        String auth = username + ":" + password;
+        byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));
+        String authHeader = "Basic " + new String(encodedAuth);
+
+        HttpHeaders authorization = new HttpHeaders();
+        authorization.set("Authorization", authHeader);
+        return authorization;
     }
 
     CommonWebClient addParam(PageInfo pageInfo) {

@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Component;
-import sam.biblio.dto.PageInfo;
-import sam.biblio.dto.library.Lending;
+import sam.biblio.model.PageInfo;
+import sam.biblio.model.library.Lending;
 import sam.biblio.web.webclient.LendingWebClient;
 
 import java.net.URISyntaxException;

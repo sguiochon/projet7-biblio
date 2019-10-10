@@ -1,20 +1,18 @@
 package sam.biblio.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import sam.biblio.dto.library.Document;
 import sam.biblio.web.config.ApplicationConfig;
+import sam.biblio.web.dto.DocumentDTO;
 import sam.biblio.web.dto.NavDTO;
+import sam.biblio.web.dto.PageDTO;
 import sam.biblio.web.dto.RechercheDocumentDTO;
 import sam.biblio.web.service.SearchDocumentService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class SearchController {
@@ -35,20 +33,17 @@ public class SearchController {
 
         int currentPage = pageNb == null ? 0 : Integer.parseInt(pageNb);
 
-        PagedResources<Resource<Document>> documents = searchDocumentService.searchDocument(applicationConfig.tableSize, currentPage, criteria);
+        PageDTO<DocumentDTO> page = searchDocumentService.searchDocument(applicationConfig.tableSize, currentPage, criteria);
 
         NavDTO nav = null;
-        if (documents.getMetadata().getTotalPages() != 0)
-            nav = navHelper.buildNavInfo(currentPage, documents.getMetadata().getTotalPages());
+        if (page.getPageMetadata().getTotalPages() != 0)
+            nav = navHelper.buildNavInfo(currentPage, page.getPageMetadata().getTotalPages());
 
-        List<Document> collected = documents.getContent().stream().map((s)->{return s.getContent();}).collect(Collectors.toList());
+        List<DocumentDTO> collected = page.getContent();
 
         model.addAttribute("nav", nav);
         model.addAttribute("recherche", recherche);
         model.addAttribute("documents", collected);
-
-        documents.getContent().forEach((i)->{
-            System.out.println(i.getContent().getTitle());});
 
         return "documentsPage";
     }

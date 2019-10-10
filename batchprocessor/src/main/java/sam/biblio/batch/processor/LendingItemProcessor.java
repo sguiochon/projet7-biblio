@@ -5,11 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Component;
-import sam.biblio.dto.library.Copy;
-import sam.biblio.dto.library.Document;
-import sam.biblio.dto.library.Lending;
-import sam.biblio.dto.library.Member;
-import sam.biblio.dto.security.User;
+import sam.biblio.model.library.Copy;
+import sam.biblio.model.library.Document;
+import sam.biblio.model.library.Lending;
+import sam.biblio.model.library.Member;
+import sam.biblio.model.security.User;
 import sam.biblio.web.webclient.*;
 
 import java.util.HashMap;

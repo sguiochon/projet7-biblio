@@ -1,4 +1,4 @@
-package sam.biblio.dto.library;
+package sam.biblio.model.library;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

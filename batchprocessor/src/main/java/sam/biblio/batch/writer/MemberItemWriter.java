@@ -3,7 +3,7 @@ package sam.biblio.batch.writer;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import sam.biblio.dto.library.Member;
+import sam.biblio.model.library.Member;
 
 import java.util.List;
 

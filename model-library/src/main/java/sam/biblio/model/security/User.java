@@ -1,4 +1,4 @@
-package sam.biblio.dto.security;
+package sam.biblio.model.security;
 
 import org.springframework.hateoas.ResourceSupport;
 

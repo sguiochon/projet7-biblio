@@ -8,10 +8,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import sam.biblio.dto.PageInfo;
-import sam.biblio.dto.library.Document;
-
-import java.net.URISyntaxException;
+import sam.biblio.model.PageInfo;
+import sam.biblio.model.library.Document;
 
 @Component
 public class DocumentWebClient extends CommonWebClient {
@@ -26,8 +24,10 @@ public class DocumentWebClient extends CommonWebClient {
                                 @Value("${api.biblio.basic-authentication.password}") String password,
                                 @Value("${api.biblio.resource.path.documents.searchByText}") String searchByTextURLFragment,
                                 @Value("${api.biblio.resource.path.documents.searchByText.paramAuthor}") String searchByTextParamAuthor,
-                                @Value("${api.biblio.resource.path.documents.searchByText.paramTitle}")String searchByTextParamTitle){
-        super(endpoint, resourcePath, username, password);
+                                @Value("${api.biblio.resource.path.documents.searchByText.paramTitle}")String searchByTextParamTitle,
+                                @Value("${httpclient.connectTimeout:10000}") int connectTimeout,
+                                @Value("${httpclient.readTimeout:10000}") int readTimeout) {
+        super(endpoint, resourcePath, username, password, connectTimeout, readTimeout);
         this.searchByTextURLFragment = searchByTextURLFragment;
         this.searchByTextParamAuthor = searchByTextParamAuthor;
         this.searchByTextParamTitle = searchByTextParamTitle;

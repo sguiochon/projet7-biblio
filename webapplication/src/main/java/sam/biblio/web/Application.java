@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
-import sam.biblio.dto.security.User;
+import sam.biblio.model.security.User;
 import sam.biblio.web.webclient.LendingWebClient;
 import sam.biblio.web.webclient.MemberWebClient;
 import sam.biblio.web.webclient.UserWebClient;

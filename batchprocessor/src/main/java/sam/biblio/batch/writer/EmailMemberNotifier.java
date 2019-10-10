@@ -8,8 +8,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
-import sam.biblio.dto.library.Lending;
-import sam.biblio.dto.library.Member;
+import sam.biblio.model.library.Lending;
+import sam.biblio.model.library.Member;
 
 @Component
 @Profile("prod")

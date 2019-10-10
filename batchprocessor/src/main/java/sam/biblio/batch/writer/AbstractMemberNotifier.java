@@ -1,6 +1,6 @@
 package sam.biblio.batch.writer;
 
-import sam.biblio.dto.library.Member;
+import sam.biblio.model.library.Member;
 
 import java.util.function.Consumer;
 

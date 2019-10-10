@@ -8,8 +8,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import sam.biblio.dto.PageInfo;
-import sam.biblio.dto.library.Copy;
+import sam.biblio.model.PageInfo;
+import sam.biblio.model.library.Copy;
 
 import java.net.URISyntaxException;
 
@@ -19,8 +19,10 @@ public class CopyWebClient extends CommonWebClient {
     protected CopyWebClient(@Value("${api.biblio.endpoint}") String endpoint,
                             @Value("${api.biblio.resource.path.copies}") String resourcePath,
                             @Value("${api.biblio.basic-authentication.id}") String username,
-                            @Value("${api.biblio.basic-authentication.password}") String password) throws URISyntaxException {
-        super(endpoint, resourcePath, username, password);
+                            @Value("${api.biblio.basic-authentication.password}") String password,
+                            @Value("${httpclient.connectTimeout:10000}") int connectTimeout,
+                            @Value("${httpclient.readTimeout:10000}") int readTimeout) {
+        super(endpoint, resourcePath, username, password, connectTimeout, readTimeout);
     }
 
     public PagedResources<Resource<Copy>> findAll(PageInfo page) throws URISyntaxException {

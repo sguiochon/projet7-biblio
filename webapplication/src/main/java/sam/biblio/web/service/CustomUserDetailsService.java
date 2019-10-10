@@ -11,9 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
-import sam.biblio.dto.security.Privilege;
-import sam.biblio.dto.security.Role;
-import sam.biblio.dto.security.User;
+import sam.biblio.model.security.Privilege;
+import sam.biblio.model.security.Role;
+import sam.biblio.model.security.User;
 import sam.biblio.web.webclient.UserWebClient;
 
 import javax.servlet.http.HttpServletRequest;
