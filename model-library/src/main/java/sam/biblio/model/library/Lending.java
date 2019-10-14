@@ -1,12 +1,14 @@
 package sam.biblio.model.library;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Lending {
 
+    @JsonProperty("lendingId")
     private Long id;
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     private LocalDate start;

@@ -1,36 +1,43 @@
 package sam.biblio.model.security;
 
-import org.springframework.hateoas.ResourceSupport;
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class User extends ResourceSupport {
+public class User {//extends ResourceSupport {
+    @JsonProperty("userId")
+    private Long userId;
 
     private String firstName;
-
     private String lastName;
-
     private String email;
-
     private String password;
-
     private boolean enabled;
-
     private Collection<Role> roles;
 
     public User() {
         this.enabled = false;
-        roles = new ArrayList<Role>();
+        roles = new ArrayList<>();
     }
 
-    public User(String firstName, String lastName, String email, String password){
+    public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.enabled = false;
-        roles = new ArrayList<Role>();
+        roles = new ArrayList<>();
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long id) {
+        this.userId = id;
     }
 
     public String getFirstName() {
@@ -108,7 +115,7 @@ public class User extends ResourceSupport {
         return email.equals(user.email);
     }
 
-    public void addRole(Role role){
+    public void addRole(Role role) {
         roles.add(role);
     }
 
@@ -121,7 +128,7 @@ public class User extends ResourceSupport {
                 .append(", password=").append(password)
                 .append(", enabled=").append(enabled)
                 .append(", roles=").append(roles)
-                .append("]");
+                .append(", id=").append(userId).append("]");
         return builder.toString();
     }
 

@@ -1,8 +1,11 @@
 package sam.biblio.model.library;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Copy {
+    @JsonProperty("copyId")
     private Long id;
-    private CopyStatus status;
+    private CopyStatusEnum status;
     private Document document;
     private Lending lending;
 
@@ -14,11 +17,11 @@ public class Copy {
         this.id = id;
     }
 
-    public CopyStatus getStatus() {
+    public CopyStatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(CopyStatus status) {
+    public void setStatus(CopyStatusEnum status) {
         this.status = status;
     }
 

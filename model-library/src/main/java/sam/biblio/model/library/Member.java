@@ -1,6 +1,7 @@
 package sam.biblio.model.library;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import sam.biblio.model.security.User;
 
 import java.time.LocalDate;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Member {
-
+    @JsonProperty("memberId")
     private Long id;
     private User user;
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)

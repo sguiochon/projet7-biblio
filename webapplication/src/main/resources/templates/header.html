@@ -76,15 +76,17 @@
 
 <div class="container" style="display:inline" th:fragment="copy">
     <nav class="navbar navbar-expand-md navbar-light bg-white sticky-top">
-        <a class="navbar-brand" href="#">Bibliothèque<br>de Toulon</a>
-            <img th:src="@{/images/p7-logo_86x83.png}"/>
-        <button aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation"
+        <div>
+            <a class="navbar-brand " href="#">Bibliothèque<br>de Toulon</a>
+            <img class="navbar-brand" style="align-content: flex-start" th:src="@{/images/p7-logo_86x83.png}"/>
+        </div>
+        <button aria-controls="navbarElements" aria-expanded="false" aria-label="Toggle navigation"
                 class="navbar-toggler"
-                data-target="#navbarsExampleDefault" data-toggle="collapse" type="button">
+                data-target="#navbarElement" data-toggle="collapse" type="button">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <div class="collapse navbar-collapse" id="navbarElements">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active"
                     th:class="${#httpServletRequest.getServletPath()}=='/'? 'nav-item active' : 'nav-item'">
@@ -133,7 +135,8 @@
 
             </ul>
             <form class="form-inline my-2 my-lg-0" method="post" th:action="@{/search}">
-                <input aria-label="Rechercher" class="form-control mr-sm-2" placeholder="titre ou auteur" type="text" name="criteria">
+                <input aria-label="Rechercher" class="form-control mr-sm-2" name="criteria" placeholder="titre ou auteur"
+                       type="text">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
             </form>
         </div>

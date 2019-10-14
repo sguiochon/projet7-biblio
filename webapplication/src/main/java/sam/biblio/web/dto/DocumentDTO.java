@@ -4,14 +4,22 @@ import org.dozer.Mapping;
 
 public class DocumentDTO {
 
+    private Long id;
     @Mapping("title")
     private String titre;
-
     @Mapping("author")
     private String auteur;
     private String description;
     private String image;
-    private Integer nbExemplairesLibres;
+    private Integer nbExemplairesLibres = new Integer(0);
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getTitre() {
         return titre;
@@ -53,4 +61,7 @@ public class DocumentDTO {
         this.nbExemplairesLibres = nbExemplairesLibres;
     }
 
+    public void incrementExemplairesLibres() {
+        nbExemplairesLibres++;
+    }
 }

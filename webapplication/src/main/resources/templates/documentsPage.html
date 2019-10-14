@@ -1,6 +1,6 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="header :: copy"></head>
 
@@ -47,17 +47,28 @@
                 <th:block th:each="document : ${documents}">
                     <div class="card" style="width: 100%">
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${document.titre} + ' - ' +  ${document.auteur}">Titre - Auteur</h5>
-                            <img alt="Card image cap" class="float-left" th:src="@{/images/chaperon_rouge.jpg}" style="height:100px;padding-right:8px" ><!-- th:src="${document.image2}"> -->
+                            <h5 class="card-title" th:text="${document.titre} + ' - ' +  ${document.auteur}">Titre -
+                                Auteur</h5>
+                            <img alt="Card image cap" class="float-left"
+                                 style="height:100px;padding-right:8px"
+                                 th:src="@{'/images/{name}'(name=${document.image})}">
+                            <!-- th:src="${document.image2}"> -->
                             <p class="card-text" th:text="${document.description}">Description</p>
-                            <div>
-<!--                                <button class="btn btn-secondary" style="margin:1px" type="button">
-                                    Hauteur <span class="badge badge-light" th:text="${document.} + ' exemplaires'"></span>
+                            <div sec:authorize="isAuthenticated()">
+
+                                <!--<button class="btn btn-primary" style="margin:1px" type="button">-->
+                                <span class="badge badge-light"
+                                      th:text="${document.getNbExemplairesLibres()}>0?(${document.getNbExemplairesLibres()} + ' exemplaire(s) disponible(s)'):'Aucun exemplaire disponible'"></span>
+                                <button class="btn btn-primary" data-target="#reservationModal"
+                                        data-toggle="modal" th:data-documentid="${document.id}" th:data-documenttitle="${document.titre}"
+                                        type="button">Réserver
                                 </button>
--->                            </div>
+                                <!--</button>-->
+
+                            </div>
                         </div>
+                        <p/>
                     </div>
-                    <p/>
                 </th:block>
 
             </form>
@@ -69,7 +80,60 @@
 
 </div>
 
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="reservationModal" role="dialog"
+     tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Réservation d'un exemplaire</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Confirmez-vous la réservation d'un exemplaire ?
+                <input class="form-control" id="recipient-name" name="id" type="hidden">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-dismiss="modal" type="button">Annuler</button>
+                <button class="btn btn-primary" onclick="bookCopy();" type="button">Confirmer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <br/>
+<script>
+    $('#reservationModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var documentId = button.data('documentid'); // Extract info from data-* attributes
+        var documentTitle = button.data('documenttitle');
+        var modal = $(this);
+        modal.find('.modal-title').text(documentTitle);
+        modal.find('.modal-body input').val(documentId)
+    });
+
+    function bookCopy() {
+        var id = $("#reservationModal").find("#recipient-name").val();
+        console.log("documentId: " + id);
+        $.ajax({
+            url: 'lend',
+            contentType: 'application/json',
+            dataType: 'text',
+            data: '{"id":' + id + '}',
+            type: 'POST',
+            error: function () {
+                console.log("erreur....")
+            },
+            success: function (result) {
+                $("#reservationModal").modal("hide");
+                console.log("reservation effectuee...." + result);
+                location.reload();
+            }
+        });
+    }
+</script>
 
 </body>
 

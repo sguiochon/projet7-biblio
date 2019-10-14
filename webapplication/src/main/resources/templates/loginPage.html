@@ -8,13 +8,14 @@
 
 <p style="display:block"></p>
 <div class="container">
-    <p>&nbsp;</p>
-    <h1>Bienvenue!</h1>
-    <p>&nbsp;</p>
 
-    <div class="card mb-3" style="max-width: 550px">
-        <img class="card-img-top" src="depositphotos_login.jpg" alt="Card image cap">
+
+    <div class="card mb-3" id="login" >
+        <!--<img class="card-img-top" th:src="@{/images/vieux-livres.jpg}" alt="Card image cap">-->
         <div class="card-body">
+            <p>&nbsp;</p>
+            <h1>Bienvenue!</h1>
+            <p>&nbsp;</p>
             <div th:if="${loginError}" class="alert alert-warning" role="alert">
             Email ou mot de passe incorrect
             </div>

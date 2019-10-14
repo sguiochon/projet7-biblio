@@ -19,7 +19,7 @@ public class LoginController {
     @GetMapping(value = "/login")
     public String login() {
         System.out.println(">>>>>  GET /login");
-        return "login";
+        return "loginPage";
     }
 
     @PostMapping(value="/login")
@@ -31,7 +31,7 @@ public class LoginController {
     @RequestMapping("/login-error")
     public String loginError(Model model) {
         model.addAttribute("loginError", true);
-        return "login";
+        return "loginPage";
     }
 
     @GetMapping(value = "/logout")

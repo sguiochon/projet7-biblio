@@ -7,7 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
+import sam.biblio.model.PageInfo;
+import sam.biblio.model.library.Document;
 import sam.biblio.model.security.User;
+import sam.biblio.web.webclient.DocumentWebClient;
 import sam.biblio.web.webclient.LendingWebClient;
 import sam.biblio.web.webclient.MemberWebClient;
 import sam.biblio.web.webclient.UserWebClient;
@@ -25,6 +28,9 @@ public class Application implements CommandLineRunner {
     @Autowired
     MemberWebClient memberWebClient;
 
+    @Autowired
+    DocumentWebClient documentWebClient;
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
@@ -33,10 +39,20 @@ public class Application implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        PagedResources<Resource<User>> users = userWebClient.findAll(null);
+        System.out.println("_________________________________________");
 
+        PagedResources<Resource<User>> users = userWebClient.findAll(null);
         Resource<User> user = userWebClient.findByEmail("inferno@hell.com");
         System.out.println(user.toString());
+
+        System.out.println("_________________________________________");
+
+        String criteria = "l";
+        PageInfo page = new PageInfo(10L);
+        PagedResources<Resource<Document>> result = documentWebClient.findByTextString(page, criteria);
+        for (Resource<Document> resourceDocument : result.getContent()){
+            System.out.println(resourceDocument.toString());
+        }
     }
 
 

@@ -25,7 +25,7 @@ public class CopyWebClient extends CommonWebClient {
         super(endpoint, resourcePath, username, password, connectTimeout, readTimeout);
     }
 
-    public PagedResources<Resource<Copy>> findAll(PageInfo page) throws URISyntaxException {
+    public PagedResources<Resource<Copy>> findAll(PageInfo page) {
         ResponseEntity<PagedResources<Resource<Copy>>> response = buildRestTemplate().exchange( setUrl(apiEndPoint + resourcePath).addParam(page).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
@@ -34,11 +34,20 @@ public class CopyWebClient extends CommonWebClient {
         return response.getBody();
     }
 
-    public Resource<Copy> findByResourceUrl(String resourceUrl) throws URISyntaxException {
+    public Resource<Copy> findByResourceUrl(String resourceUrl) {
         ResponseEntity<Resource<Copy>> response = buildRestTemplate().exchange(setUrl(resourceUrl).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
                 new ParameterizedTypeReference<Resource<Copy>>() {
+                });
+        return response.getBody();
+    }
+
+    public PagedResources<Resource<Copy>> findByResourcesUrl(String resourceUrl) {
+        ResponseEntity<PagedResources<Resource<Copy>>> response = buildRestTemplate().exchange(setUrl(resourceUrl).buildURL(),
+                HttpMethod.GET,
+                new HttpEntity(createHeaders(username, password)),
+                new ParameterizedTypeReference<PagedResources<Resource<Copy>>>() {
                 });
         return response.getBody();
     }
