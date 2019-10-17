@@ -1,11 +1,9 @@
-language: java
-
-before_install:
-  - chmod +x mvnw
-
-jdk:
-  - oraclejdk9
+addons:
+  sonarcloud:
+    organization: "sguiochon"
+    token:
+      secure: "4c8893d17d5a84069c6ab8cd1afb0df493c2f1ff" # encrypted value of your token
 
 script:
-  - mvn clean install
-
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
