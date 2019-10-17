@@ -57,10 +57,8 @@
                             <div sec:authorize="isAuthenticated()">
 
                                 <!--<button class="btn btn-primary" style="margin:1px" type="button">-->
-                                <span class="badge badge-light"
-                                      th:text="${document.getNbExemplairesLibres()}>0?(${document.getNbExemplairesLibres()} + ' exemplaire(s) disponible(s)'):'Aucun exemplaire disponible'"></span>
-                                <button class="btn btn-primary" data-target="#reservationModal"
-                                        data-toggle="modal" th:data-documentid="${document.id}" th:data-documenttitle="${document.titre}"
+                                <span class="badge badge-light" th:text="${document.getNbExemplairesLibres()}>0?(${document.getNbExemplairesLibres()} + ' exemplaire(s) disponible(s)'):'Aucun exemplaire disponible'"></span>
+                                <button th:if="${document.getNbExemplairesLibres()}>0" class="btn btn-primary" data-target="#reservationModal" data-toggle="modal" th:data-documentid="${document.id}" th:data-documenttitle="${document.titre}"
                                         type="button">Réserver
                                 </button>
                                 <!--</button>-->
