@@ -31,7 +31,7 @@ public class MemberWebClient extends CommonWebClient {
     }
 
     public PagedResources<Resource<Member>> findAll(PageInfo page) {
-        ResponseEntity<PagedResources<Resource<Member>>> response = buildRestTemplate().exchange(setUrl(apiEndPoint + resourcePath).addParam(page).buildURL(),
+        ResponseEntity<PagedResources<Resource<Member>>> response = restTemplate.exchange(setUrl(apiEndPoint + resourcePath).addParam(page).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
                 new ParameterizedTypeReference<PagedResources<Resource<Member>>>() {
@@ -40,7 +40,7 @@ public class MemberWebClient extends CommonWebClient {
     }
 
     public Resource<Member> findByResourceUrl(String resourceUrl) {
-        ResponseEntity<Resource<Member>> response = buildRestTemplate().exchange(setUrl(resourceUrl).buildURL(),
+        ResponseEntity<Resource<Member>> response = restTemplate.exchange(setUrl(resourceUrl).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
                 new ParameterizedTypeReference<Resource<Member>>() {
@@ -49,7 +49,7 @@ public class MemberWebClient extends CommonWebClient {
     }
 
     public Resource<Member> findByUserEmail(String userEmail) {
-        ResponseEntity<Resource<Member>> response = buildRestTemplate().exchange(setUrl(apiEndPoint + findByUserEmailURLFragment).addParam(findByUserEmailParam, userEmail).buildURL(),
+        ResponseEntity<Resource<Member>> response = restTemplate.exchange(setUrl(apiEndPoint + findByUserEmailURLFragment).addParam(findByUserEmailParam, userEmail).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
                 new ParameterizedTypeReference<Resource<Member>>() {

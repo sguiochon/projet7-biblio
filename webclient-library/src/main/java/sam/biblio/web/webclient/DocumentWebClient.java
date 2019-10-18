@@ -34,7 +34,7 @@ public class DocumentWebClient extends CommonWebClient {
     }
 
     public PagedResources<Resource<Document>> findAll(PageInfo page){
-        ResponseEntity<PagedResources<Resource<Document>>> response = buildRestTemplate().exchange(setUrl(apiEndPoint + resourcePath).addParam(page).buildURL(),
+        ResponseEntity<PagedResources<Resource<Document>>> response = restTemplate.exchange(setUrl(apiEndPoint + resourcePath).addParam(page).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
                 new ParameterizedTypeReference<PagedResources<Resource<Document>>>() {
@@ -43,7 +43,7 @@ public class DocumentWebClient extends CommonWebClient {
     }
 
     public Resource<Document> findByResourceUrl(String resourceUrl) {
-        ResponseEntity<Resource<Document>> response = buildRestTemplate().exchange(setUrl(resourceUrl).buildURL(),
+        ResponseEntity<Resource<Document>> response = restTemplate.exchange(setUrl(resourceUrl).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
                 new ParameterizedTypeReference<Resource<Document>>() {
@@ -52,7 +52,7 @@ public class DocumentWebClient extends CommonWebClient {
     }
 
     public PagedResources<Resource<Document>> findByTextString(PageInfo page, String criteria){
-        ResponseEntity<PagedResources<Resource<Document>>> response = buildRestTemplate().exchange(setUrl(apiEndPoint + searchByTextURLFragment).addParam(page).addParam(searchByTextParamAuthor, criteria).addParam(searchByTextParamTitle, criteria).buildURL(),
+        ResponseEntity<PagedResources<Resource<Document>>> response = restTemplate.exchange(setUrl(apiEndPoint + searchByTextURLFragment).addParam(page).addParam(searchByTextParamAuthor, criteria).addParam(searchByTextParamTitle, criteria).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
                 new ParameterizedTypeReference<PagedResources<Resource<Document>>>() {

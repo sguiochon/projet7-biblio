@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 
 import java.net.URISyntaxException;
 
@@ -21,7 +20,7 @@ public class ErrorController {
     }
 
     @ExceptionHandler(HttpClientErrorException.class)
-    public String handleException(HttpClientErrorException ex){
+    public String handleException(HttpClientErrorException ex) {
         return "error/api_error";
     }
 

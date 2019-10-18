@@ -18,6 +18,7 @@ import java.util.Collections;
 
 public class CommonWebClient {
 
+    RestTemplate restTemplate;
     String apiEndPoint;
     String resourcePath;
     String username;
@@ -33,13 +34,14 @@ public class CommonWebClient {
         this.password = password;
         this.connectTimeout = connectTimeout;
         this.readTimeout = readTimeout;
+        buildRestTemplate();
     }
 
     /**
      * Builds a RestTemplate instance that fixes a bug in SpringBoot Web Client: http header Accept is not
      * valid for Spring Data REST API and must be forced to 'application/hal+json'.
      */
-    RestTemplate buildRestTemplate() {
+    private void buildRestTemplate() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.registerModule(new Jackson2HalModule());
@@ -49,14 +51,12 @@ public class CommonWebClient {
         messageConverter.setSupportedMediaTypes(MediaType.parseMediaTypes(Arrays.asList("*/*", "application/hal+json;charset=utf-8", "application/json;charset=utf-8")));
         messageConverter.setObjectMapper(objectMapper);
 
-        RestTemplate restTemplate = new RestTemplate(Collections.singletonList(messageConverter));
+        restTemplate = new RestTemplate(Collections.singletonList(messageConverter));
 
         restTemplate.setRequestFactory(new SimpleClientHttpRequestFactory());
         SimpleClientHttpRequestFactory rf = (SimpleClientHttpRequestFactory) restTemplate.getRequestFactory();
         rf.setReadTimeout(readTimeout);
         rf.setConnectTimeout(connectTimeout);
-
-        return restTemplate;
     }
 
     HttpHeaders createHeaders(String username, String password) {

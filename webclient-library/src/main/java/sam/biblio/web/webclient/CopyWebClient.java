@@ -26,7 +26,7 @@ public class CopyWebClient extends CommonWebClient {
     }
 
     public PagedResources<Resource<Copy>> findAll(PageInfo page) {
-        ResponseEntity<PagedResources<Resource<Copy>>> response = buildRestTemplate().exchange( setUrl(apiEndPoint + resourcePath).addParam(page).buildURL(),
+        ResponseEntity<PagedResources<Resource<Copy>>> response = restTemplate.exchange( setUrl(apiEndPoint + resourcePath).addParam(page).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
                 new ParameterizedTypeReference<PagedResources<Resource<Copy>>>() {
@@ -35,7 +35,7 @@ public class CopyWebClient extends CommonWebClient {
     }
 
     public Resource<Copy> findByResourceUrl(String resourceUrl) {
-        ResponseEntity<Resource<Copy>> response = buildRestTemplate().exchange(setUrl(resourceUrl).buildURL(),
+        ResponseEntity<Resource<Copy>> response = restTemplate.exchange(setUrl(resourceUrl).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
                 new ParameterizedTypeReference<Resource<Copy>>() {
@@ -44,7 +44,7 @@ public class CopyWebClient extends CommonWebClient {
     }
 
     public PagedResources<Resource<Copy>> findByResourcesUrl(String resourceUrl) {
-        ResponseEntity<PagedResources<Resource<Copy>>> response = buildRestTemplate().exchange(setUrl(resourceUrl).buildURL(),
+        ResponseEntity<PagedResources<Resource<Copy>>> response = restTemplate.exchange(setUrl(resourceUrl).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
                 new ParameterizedTypeReference<PagedResources<Resource<Copy>>>() {

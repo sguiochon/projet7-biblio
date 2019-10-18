@@ -32,8 +32,8 @@ public class UserWebClient extends CommonWebClient{
         this.findByEmailParamEmail = findByEmailParamEmail;
     }
 
-    public PagedResources<Resource<User>> findAll(PageInfo page) throws URISyntaxException {
-        ResponseEntity<PagedResources<Resource<User>>> response = buildRestTemplate().exchange( setUrl(apiEndPoint + resourcePath).addParam(page).buildURL(),
+    public PagedResources<Resource<User>> findAll(PageInfo page){
+        ResponseEntity<PagedResources<Resource<User>>> response = restTemplate.exchange( setUrl(apiEndPoint + resourcePath).addParam(page).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
                 new ParameterizedTypeReference<PagedResources<Resource<User>>>() {
@@ -41,8 +41,8 @@ public class UserWebClient extends CommonWebClient{
         return response.getBody();
     }
 
-    public Resource<User> findByResourceUrl(String resourceUrl) throws URISyntaxException {
-        ResponseEntity<Resource<User>> response = buildRestTemplate().exchange(setUrl(resourceUrl).buildURL(),
+    public Resource<User> findByResourceUrl(String resourceUrl) {
+        ResponseEntity<Resource<User>> response = restTemplate.exchange(setUrl(resourceUrl).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
                 new ParameterizedTypeReference<Resource<User>>() {
@@ -50,8 +50,8 @@ public class UserWebClient extends CommonWebClient{
         return response.getBody();
     }
 
-    public Resource<User> findByEmail(String email) throws URISyntaxException {
-        ResponseEntity<Resource<User>> response = buildRestTemplate().exchange( setUrl(apiEndPoint + findByEmailURLFragment).addParam(findByEmailParamEmail, email).buildURL(),
+    public Resource<User> findByEmail(String email){
+        ResponseEntity<Resource<User>> response = restTemplate.exchange( setUrl(apiEndPoint + findByEmailURLFragment).addParam(findByEmailParamEmail, email).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
                 new ParameterizedTypeReference<Resource<User>>() {

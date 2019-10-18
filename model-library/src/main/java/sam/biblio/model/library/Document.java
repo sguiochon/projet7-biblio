@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class Document {//extends ResourceSupport {
+public class Document {
     @JsonProperty("documentId")
     private Long id;
     private String title;

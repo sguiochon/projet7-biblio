@@ -32,7 +32,7 @@ public class PageDTO<T> {
 
     public void addContent(T t) {
         if (content == null)
-            content = new ArrayList<T>();
+            content = new ArrayList<>();
         content.add(t);
     }
 
@@ -42,10 +42,10 @@ public class PageDTO<T> {
         private long totalPages;
         private long numero;
 
-        protected PageMetadata() {
+        PageMetadata() {
         }
 
-        public PageMetadata(long taille, long numero, long totalElements, long totalPages) {
+        PageMetadata(long taille, long numero, long totalElements, long totalPages) {
             Assert.isTrue(taille > -1L, "Size must not be negative!");
             Assert.isTrue(numero > -1L, "Number must not be negative!");
             Assert.isTrue(totalElements > -1L, "Total elements must not be negative!");

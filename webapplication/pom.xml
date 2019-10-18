@@ -79,6 +79,7 @@
                     <workingDirectory>${basedir}</workingDirectory>
                     <skip>false</skip>
                     <fork>true</fork>
+                    <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000</jvmArguments>
                 </configuration>
             </plugin>
         </plugins>

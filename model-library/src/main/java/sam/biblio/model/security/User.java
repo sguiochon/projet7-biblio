@@ -1,13 +1,11 @@
 package sam.biblio.model.security;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class User {//extends ResourceSupport {
+public class User {
     @JsonProperty("userId")
     private Long userId;
 

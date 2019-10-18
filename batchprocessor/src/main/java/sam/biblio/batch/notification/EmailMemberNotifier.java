@@ -1,4 +1,4 @@
-package sam.biblio.batch.writer;
+package sam.biblio.batch.notification;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +13,9 @@ import sam.biblio.model.library.Member;
 
 @Component
 @Profile("prod")
-public class EmailMemberNotifier extends AbstractMemberNotifier {
+public class EmailMemberNotifier implements MemberNotifier {
 
-    private static final Logger logger = LoggerFactory.getLogger(EmailMemberNotifier.class);
+    private static final Logger log = LoggerFactory.getLogger(EmailMemberNotifier.class);
 
     private final JavaMailSender mailSender;
     private final Environment env;
@@ -29,7 +29,7 @@ public class EmailMemberNotifier extends AbstractMemberNotifier {
     @Override
     public void accept(Member member) {
         final SimpleMailMessage email = constructEmailMessage(member);
-        logger.debug("Envoi d'email: " + email);
+        log.debug("Envoi d'email: {}", email);
         mailSender.send(email);
     }
 
@@ -37,17 +37,17 @@ public class EmailMemberNotifier extends AbstractMemberNotifier {
         final String recipientAddress = member.getUser().getEmail();
         final String subject = "Rappel de retour de prêt";
 
-        String message = "Cher lecteur,\r\n La date de retour d'ouvrage(s) emprunté(s) a été dépassée.\r\n";
-        message += "Ouvrage(s) concerné(s):\r\n";
+        StringBuilder message = new StringBuilder("Cher lecteur,\r\n La date de retour d'ouvrage(s) emprunté(s) a été dépassée.\r\n");
+        message.append("Ouvrage(s) concerné(s):\r\n");
 
         for (Lending l : member.getLendings()){
-            message += "\t" + l.getCopy().getDocument().getTitle() + ", date de retour prévue: " + l.getEnd();
+            message.append("\t").append(l.getCopy().getDocument().getTitle()).append(", date de retour prévue: ").append(l.getEnd());
         }
 
         final SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
         email.setSubject(subject);
-        email.setText(message);
+        email.setText(message.toString());
         email.setFrom(env.getProperty("email.from"));
         return email;
     }

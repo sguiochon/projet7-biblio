@@ -8,6 +8,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 import sam.biblio.model.PageInfo;
 import sam.biblio.model.library.Lending;
 
@@ -15,6 +16,8 @@ import java.time.LocalDate;
 
 @Component
 public class LendingWebClient extends CommonWebClient {
+
+
 
     private String findByEndBeforeURLFragment;
     private String findByEndBeforeParamDate;
@@ -33,7 +36,7 @@ public class LendingWebClient extends CommonWebClient {
     }
 
     public PagedResources<Resource<Lending>> findByEndDateBefore(PageInfo page, LocalDate limitDate) {
-        ResponseEntity<PagedResources<Resource<Lending>>> response = buildRestTemplate().exchange(setUrl(apiEndPoint + findByEndBeforeURLFragment).addParam(page).addParam(findByEndBeforeParamDate, limitDate.toString()).buildURL(),
+        ResponseEntity<PagedResources<Resource<Lending>>> response = restTemplate.exchange(setUrl(apiEndPoint + findByEndBeforeURLFragment).addParam(page).addParam(findByEndBeforeParamDate, limitDate.toString()).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
                 new ParameterizedTypeReference<PagedResources<Resource<Lending>>>() {
@@ -42,7 +45,7 @@ public class LendingWebClient extends CommonWebClient {
     }
 
     public PagedResources<Resource<Lending>> findAll(PageInfo page) {
-        ResponseEntity<PagedResources<Resource<Lending>>> response = buildRestTemplate().exchange(setUrl(apiEndPoint + resourcePath).addParam(page).buildURL(),
+        ResponseEntity<PagedResources<Resource<Lending>>> response = restTemplate.exchange(setUrl(apiEndPoint + resourcePath).addParam(page).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
                 new ParameterizedTypeReference<PagedResources<Resource<Lending>>>() {
@@ -51,7 +54,7 @@ public class LendingWebClient extends CommonWebClient {
     }
 
     public Resource<Lending> findByResourceUrl(String resourceUrl) {
-        ResponseEntity<Resource<Lending>> response = buildRestTemplate().exchange(setUrl(resourceUrl).buildURL(),
+        ResponseEntity<Resource<Lending>> response = restTemplate.exchange(setUrl(resourceUrl).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
                 new ParameterizedTypeReference<Resource<Lending>>() {

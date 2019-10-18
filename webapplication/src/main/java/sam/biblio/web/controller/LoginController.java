@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,13 +17,11 @@ public class LoginController {
 
     @GetMapping(value = "/login")
     public String login() {
-        System.out.println(">>>>>  GET /login");
         return "loginPage";
     }
 
-    @PostMapping(value="/login")
-    public String postLogin(){
-        System.out.println(">>>>>  POST /login");
+    @PostMapping(value = "/login")
+    public String postLogin() {
         return "redirect:/";
     }
 

@@ -19,7 +19,7 @@ public class Role {
     public Role(final String name) {
         super();
         this.name = name;
-        privileges = new ArrayList<Privilege>();
+        privileges = new ArrayList<>();
     }
 
     public Long getId() {
@@ -44,29 +44,6 @@ public class Role {
 
     public void setPrivileges(final Collection<Privilege> privileges) {
         this.privileges = privileges;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Role role = (Role) obj;
-        return role.equals(role.name);
     }
 
     @Override

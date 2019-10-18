@@ -11,7 +11,7 @@ public class DocumentDTO {
     private String auteur;
     private String description;
     private String image;
-    private Integer nbExemplairesLibres = new Integer(0);
+    private Integer nbExemplairesLibres = 0;
 
     public Long getId() {
         return id;
