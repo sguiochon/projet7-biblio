@@ -46,8 +46,7 @@ public class DocumentWebClient extends CommonWebClient {
         ResponseEntity<Resource<Document>> response = restTemplate.exchange(setUrl(resourceUrl).buildURL(),
                 HttpMethod.GET,
                 new HttpEntity(createHeaders(username, password)),
-                new ParameterizedTypeReference<Resource<Document>>() {
-                });
+                new ParameterizedTypeReference<Resource<Document>>() {});
         return response.getBody();
     }
 
@@ -59,5 +58,14 @@ public class DocumentWebClient extends CommonWebClient {
                 });
         return response.getBody();
     }
+
+    public Resource<Document> findById(Long documentID) {
+        ResponseEntity<Resource<Document>> response = restTemplate.exchange(setUrl(apiEndPoint + resourcePath + "/" + documentID).buildURL(),
+                HttpMethod.GET,
+                new HttpEntity(createHeaders(username, password)),
+                new ParameterizedTypeReference<Resource<Document>>() {});
+        return response.getBody();
+    }
+
 
 }

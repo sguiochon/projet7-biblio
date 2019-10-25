@@ -15,11 +15,11 @@ public class LendingRestController {
     @Autowired
     LendCopyService lendCopyService;
 
-    @PostMapping(value="/lend")
-    public String lendCopy(Principal principal, @RequestBody LendCopyDTO lendCopyDTO){
+    @PostMapping(value = "/lend")
+    public String lendCopy(Principal principal, @RequestBody LendCopyDTO lendCopyDTO) {
         System.out.println(">>>>> demande de reservation d'un exemplaire: " + lendCopyDTO.toString());
 
-
+        lendCopyService.lendCopy(lendCopyDTO.getDocumentId(), principal.getName());
 
         return "";
     }

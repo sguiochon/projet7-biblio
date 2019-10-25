@@ -1,13 +1,16 @@
 package sam.biblio.web.dto;
 
-public class LendCopyDTO {
-    Integer documentId;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    public Integer getDocumentId() {
+public class LendCopyDTO {
+    @JsonProperty("id")
+    Long documentId;
+
+    public Long getDocumentId() {
         return documentId;
     }
 
-    public void setDocumentId(Integer documentId) {
+    public void setDocumentId(Long documentId) {
         this.documentId = documentId;
     }
 }
